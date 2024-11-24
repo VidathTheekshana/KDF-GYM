@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="https://www.rudebox.org.ua/favicon.ico"/>
+    <link rel='stylesheet prefetch' href='https://www.rudebox.org.ua/demo/lessons/styles/style.css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/stylelogin.css">
+
+</head>
+
+<body class="login-page">
+<nav class="colorlib-nav" role="navigation">
+    <div class="top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div id="colorlib-logo"><a href="/index">KDF FitnessCamp</a></div>
+                </div>
+                <div class="col-md-10 text-right menu-1">
+                    <ul>
+							<li class="active"><a href="index">Home</a></li>
+							<li class="has-dropdown">
+								<a href="/classes">Groups</a>
+								<ul class="dropdown">
+									<li><a href="/classes-single">Indivitual Lessons</a></li>
+									<li><a href="#">Cross-fit group</a></li>
+									<li><a href="#">Boxing group</a></li>
+									<li><a href="#">Fitness group</a></li>
+									<li><a href="#">Body-building</a></li>
+									<li><a href="#">Power extreme</a></li>
+									<li><a href="#">Yoga</a></li>
+									<li><a href="#">Step aerobics</a></li>
+								</ul>
+							</li>
+							<li><a href="/schedule">Schedule</a></li>
+							<li><a href="/about">Trainers</a></li>
+							<li><a href="/event">Events</a></li>
+							<li><a href="/blog">Blog</a></li>
+							<li><a href="/contact">Contacts</a></li>
+
+							<li sec:authorize="hasAuthority('ROLE_TRAINER')"><a href="/trainerPage">Trainer</a></li>
+
+
+							<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/administration">Administrator</a></li>
+
+
+							<li sec:authorize="isAnonymous()"><a href="/registration">Register</a></h4></li>
+							<li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+							<li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
+
+						</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<main>
+
+    <div class="login-block">
+        <img src="images/1.png" alt="your foto"><br>
+
+        <form th:action="@{/registrationClient}" th:object="${userForm}" method="post">
+            <div class="form-group">
+                <input type="hidden" th:field="*{id}" />
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
+                    <input th:field="*{username}" name="username" type="text" class="form-control" >
+                </div>
+                <div  th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
+                    <input th:field="*{firstName}"name="firstname" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
+                    <input th:field="*{lastName}" name="lastname" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <input th:field="*{birthdate}" name="birthdate" type="date" class="form-control" th:value="2000-01-01"  th:min="1900-01-01" th:max="2020-12-31">
+                </div>
+            </div>
+            <div class="form-group">
+                <div     class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></span>
+                    <input th:field="*{email}" name="email" type="text" class="form-control">
+                </div>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></td>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                    <input th:field="*{password}" name="password" type="password" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
+                    <input th:field="*{passwordConfirm}"name="passwordConfirm" type="password" class="form-control" placeholder="confirm password">
+
+                </div>
+            </div>
+
+
+            <button class="btn btn-primary btn-block" type="submit">Change</button>
+            <div class="login-footer">
+
+                <a th:href = "@{/clientsView}">Back to user list</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="login-links">
+        <p class="text-center"> <a class="txt-brand" href="/index"><font color=#29aafe>Home</font></a></p>
+    </div>
+
+</main>
+
+</body>
+</html>

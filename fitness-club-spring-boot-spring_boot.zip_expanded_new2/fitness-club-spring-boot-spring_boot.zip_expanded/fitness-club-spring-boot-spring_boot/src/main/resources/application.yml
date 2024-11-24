@@ -1,0 +1,34 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/fitness_db?createDatabaseIfNotExist=true
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        net:
+          sf:
+            ehcache:
+              configurationResourceName: ehcache.xml
+        dialect:
+          - org.hibernate.dialect.MySQL57Dialect
+          - storage_engine: innodb
+        cache:
+          use_query_cache: true
+          use_second_level_cache: true
+          region:
+            factory_class: org.hibernate.cache.ehcache.internal.EhcacheRegionFactory
+  jackson:
+    default-property-inclusion: non_null
+
+
